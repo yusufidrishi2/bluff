@@ -1,0 +1,17 @@
+.mid-target {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bg-design {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-image: url("../img/loginbg.jpg");
+}
+
+#my-signin2 {
+    top: 70%;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Bluff</title>
+    <link rel="shortcut icon" href="./img/logo.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="./styles/loginpage.css">
+    <link rel="stylesheet" href="./styles/mainpage.css">
+    <script src="./src/env.js"></script>
+
+    <script src="//requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="724155372027-ovm2fccojqqtrrmaq62dkfla6uahqhhb.apps.googleusercontent.com">
+</head>
+<body>
+    <div id="main-area"></div>
+    <span id="login-data-container" style="display: none;"></input>
+    <script>
+        function onSuccess(googleUser) {  
+          let profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId());
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail());
+
+            let spanElement = document.getElementById("login-data-container");
+            spanElement.innerHTML = JSON.stringify({
+              id: profile.getId(),
+              name: profile.getName(),
+              dpImageUrl: profile.getImageUrl(),
+              email: profile.getEmail()
+            })
+            spanElement.click(); 
+        }
+
+        function onFailure(error) {
+          console.log(error);
+        }
+
+        function renderButton() {
+          gapi.signin2.render('my-signin2', {
+            'scope': 'profile email',
+            'width': 240,
+            'height': 50,
+            'longtitle': true,
+            'theme': 'dark',
+            'onsuccess': onSuccess,
+            'onfailure': onFailure
+          });
+        }
+
+      </script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+</body>
+</html>
