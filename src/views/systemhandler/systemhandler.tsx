@@ -84,7 +84,7 @@ export class SystemHandler {
     }
 
     private loadUIComponent(userData: UserData, divName: string) {
-        let doc: HTMLElement = document.getElementById(divName)!;
+        let element: HTMLElement = document.getElementById(divName)!;
         let view = (
             <div>
                 <div id={SYSTEM_ELEMENTS.SYSTEM_CONTENT}>
@@ -108,7 +108,7 @@ export class SystemHandler {
                 </div>
             </div>
         );
-        doc.appendChild(view);
+        element.appendChild(view);
 
         (document.getElementsByClassName('bg-design')[0]! as HTMLElement).style.setProperty("background-image", "url('../img/mainsystem.jpg')")
     }

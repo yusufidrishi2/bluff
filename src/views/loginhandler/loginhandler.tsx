@@ -31,7 +31,7 @@ export class LoginHandler {
     }
 
     private loadUIComponent(divName: string) {
-        let doc: HTMLElement = document.getElementById(divName)!;
+        let element: HTMLElement = document.getElementById(divName)!;
         let view = (
             <div class="mid-target bg-design">
                 <h1 class="main-heading">BLUFF</h1>
@@ -41,7 +41,7 @@ export class LoginHandler {
                 <small class="footer">A game by IntellectI</small>
             </div>
         );
-        doc.appendChild(view);
+        element.appendChild(view);
     }
 
     /**
