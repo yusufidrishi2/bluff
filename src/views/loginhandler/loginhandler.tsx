@@ -1,11 +1,11 @@
 /**
  * Necessary imports of the packages
  */
-import * as React from 'react';
 import { UserLoginData } from '../../services/model/logindata';
 import { UserData } from '../../services/model/userdata';
 import { TaskingSystem } from '../../services/taskingsystem/taskingsystem';
 import { MyOwnTSX } from '../../services/utils/myowntsx';
+import { SystemHandler } from '../systemhandler/systemhandler';
 
 export class LoginHandler {
 
@@ -14,12 +14,18 @@ export class LoginHandler {
     }
 
     private start(taskingSystem: TaskingSystem, divName: string) {
-        taskingSystem.isLogingNeeded().then(answer => {
+        this.loadUIComponent(divName);
+        taskingSystem.isAlreadyLoggedIn().then(answer => {
             if (answer) {
-                this.loadUIComponent(divName);
-                this.listenToUserLogin(taskingSystem);
+                taskingSystem.getUpstreamInstance()
+                    .fetchUserDataFromUpstream(answer.getId()!)
+                    .then(userData => {
+                        document.getElementById(LOGIN_HANDLER.CONTENT_CHANGE_AREA)!.innerHTML = '';
+                        new SystemHandler(userData, LOGIN_HANDLER.CONTENT_CHANGE_AREA);
+                    })
             } else {
-                let userData = taskingSystem.fetchUserDataFromUpstream();
+                document.getElementById(LOGIN_HANDLER.GOOGLE_SIGNIN)!.style.removeProperty('display');
+                this.listenToUserLogin(taskingSystem);
             }
         });
     }
@@ -27,12 +33,15 @@ export class LoginHandler {
     private loadUIComponent(divName: string) {
         let doc: HTMLElement = document.getElementById(divName)!;
         let view = (
-            <div className="mid-target bg-design">
-                <h1 style={{fontSize: "435%", textShadow: "2px 2px 4px", color: "white"}}>BLUFF</h1>
-                <div id="my-signin2" className="mid-target" style={{boxShadow: "2px 2px 4px white"}}></div>
+            <div class="mid-target bg-design">
+                <h1 class="main-heading">BLUFF</h1>
+                <div id={LOGIN_HANDLER.CONTENT_CHANGE_AREA}>
+                    <div id={LOGIN_HANDLER.GOOGLE_SIGNIN} class="mid-target" style="display: none;"></div>
+                </div>
+                <small class="footer">A game by IntellectI</small>
             </div>
         );
-        MyOwnTSX.renderUI(view, doc);
+        doc.appendChild(view);
     }
 
     /**
@@ -41,20 +50,34 @@ export class LoginHandler {
      */
      private listenToUserLogin(taskingSystem: TaskingSystem) {
         document.getElementById(LOGIN_HANDLER.LOGIN_DATA_CONTAINER)!.addEventListener('click', e => {
-            let loginData: UserLoginData = JSON.parse((e.target as HTMLSpanElement).innerHTML);
+            this.startMainSystem(taskingSystem);
+        });
+        this.startMainSystem(taskingSystem);
+    }
+
+    private startMainSystem(taskingSystem: TaskingSystem) {
+        let rawLoginData = document.getElementById(LOGIN_HANDLER.LOGIN_DATA_CONTAINER)!.innerHTML;
+        if (rawLoginData) {
+            let loginData: UserLoginData = JSON.parse(rawLoginData);
             let userData = new UserData(
                 {
-                    userId: loginData.id, 
-                    points: 0
+                    id: loginData.id,
+                    name: loginData.name, 
+                    points: 0,
+                    dpUrl: new URL(loginData.dpImageUrl)
                 }
             );
             taskingSystem.saveUserData(userData);
-        });
+            document.getElementById(LOGIN_HANDLER.CONTENT_CHANGE_AREA)!.innerHTML = '';
+            new SystemHandler(userData, LOGIN_HANDLER.CONTENT_CHANGE_AREA);
+        }
     }
 }
 
 
 
 enum LOGIN_HANDLER {
-    LOGIN_DATA_CONTAINER = 'login-data-container'
+    LOGIN_DATA_CONTAINER = 'login-data-container',
+    GOOGLE_SIGNIN = 'my-signin2',
+    CONTENT_CHANGE_AREA = 'content-change-area'
 }

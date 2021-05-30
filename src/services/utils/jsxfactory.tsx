@@ -84,4 +84,4 @@ declare global {
     }
 }
 
-export var MyOwnTSX: TSXFactory = new TSXFactory();
+export var myOwnTSX: TSXFactory = new TSXFactory();

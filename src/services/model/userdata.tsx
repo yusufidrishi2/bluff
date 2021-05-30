@@ -1,24 +1,30 @@
 export class UserData {
     
-    private _userId: number|null;
+    private _id: number|null;
     
     private _points: number|null;
 
+    private _name: string|null;
+
+    private _dpUrl: URL|null
+
     constructor(userData: IUserData|null = null) {
-        this._userId = null;
+        this._id = null;
         this._points = null;
+        this._name = null;
+        this._dpUrl = null;
         
         if (userData) {
             this.deSerialisedData(userData);    
         }
     }
 
-    setUserId(userId: number|null) {
-        this._userId = userId;
+    setId(id: number|null) {
+        this._id = id;
     }
 
-    getUserId(): number|null {
-        return this._userId;
+    getId(): number|null {
+        return this._id;
     }
 
     setPoints(points: number|null) {
@@ -29,20 +35,42 @@ export class UserData {
         return this._points;
     }
 
+    setName(name: string|null) {
+        this._name = name;
+    }
+
+    getName(): string|null {
+        return this._name;
+    }
+
+    setDpURL(dpURL: URL|null) {
+        this._dpUrl = dpURL;
+    }
+
+    getDpURL(): URL|null {
+        return this._dpUrl;
+    }
+
     getSerialisedData(): IUserData {
         return {
-            userId: this._userId!,
-            points: this._points!
+            id: this._id!,
+            points: this._points!,
+            name: this._name!,
+            dpUrl: this._dpUrl!
         }
     }
 
     deSerialisedData(userData: IUserData) {
-        this._userId = userData.userId;
+        this._id = userData.id;
         this._points = userData.points;
+        this._name = userData.name;
+        this._dpUrl = userData.dpUrl;
     }
 }
 
 export interface IUserData {
-    userId: number,
-    points: number
+    id: number,
+    points: number,
+    name: string,
+    dpUrl: URL
 }

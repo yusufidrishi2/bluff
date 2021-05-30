@@ -3,7 +3,8 @@
   
     // API url
     window.__env = {
-        TASKING_SYSTEM : "WEB_BROWSER"
+        LOCAL_TASKING_SYSTEM: "WEB_BROWSER",
+        UPSTREAM_TASKING_SYSTEM: "STANDALONE"
     };  
 }(this));
   

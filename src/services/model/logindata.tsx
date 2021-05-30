@@ -1,6 +1,6 @@
 export interface UserLoginData {
     id: number,
     name: string,
-    dpImageUrl: URL,
+    dpImageUrl: string,
     email: string
 }

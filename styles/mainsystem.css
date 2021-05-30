@@ -1,0 +1,136 @@
+.main-system-heading {
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    font-size: 28px; 
+    padding: 0px 4px 0px 4px;
+}
+
+.dp-image {
+    box-shadow: 2px 2px 5px black;
+    border: 3px solid white;
+    border-radius: 5px;
+    width: 100px;
+    height: 100px;
+}
+
+.modal {
+    width: 86%;
+    height: 50%;
+    background-image: url("../img/modal-bg.jpg");
+    box-shadow: 2px 2px 5px black;
+    border-radius: 5px;
+    border: 3px solid white;
+}
+
+.cross-button {
+    color: red;
+    right: 4px;
+    position: absolute;
+    top: 2px;
+    box-shadow: none !important;
+    text-shadow: 2px 2px 3px;
+}
+
+.btn {
+    cursor: pointer;
+    border-radius: 16px;
+    padding: 10px;
+    box-shadow: 2px 2px 4px;
+}
+
+.model-area-first {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%);
+    border: 3px solid white;
+    border-radius: 19px;
+    width: 80%;
+    height: 30%;
+    background-color: rebeccapurple;
+    box-shadow: 2px 2px 5px white;
+}
+
+.model-area-second {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, 121%);
+    border: 3px solid white;
+    border-radius: 19px;
+    width: 80%;
+    height: 30%;
+    background-color: rebeccapurple;
+    box-shadow: 2px 2px 5px white;
+}
+
+.code-area {
+    margin: 21px 0px 0px 6px;
+}
+
+.code-label {
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    text-shadow: 2px 2px 4px;
+    width: 50%;
+    margin: -12px 0px 0px 0px;
+    text-align: left;
+}
+
+.float-left {
+    float: left;
+}
+
+.code-input {
+    width: 46%;
+    height: 9px;
+    border-radius: 26px;
+    margin: -12px 0px 0px -4px;
+    resize: none;
+    height: 18px;
+}
+
+.new-game-btn {
+    margin: 27px;
+}
+
+.existing-game-btn {
+    margin: 7px;
+}
+
+.points {
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    margin: 8px 0px 0px 0px;
+}
+
+.no-coins {
+    color: #FFD700;
+    margin: 0px 0px 3px 6px;
+}
+
+.point-col {
+    position: absolute;
+    margin: 2% 0px 0px 0px;
+    transform: translate(-50%);
+    left: 50%;
+}
+
+.coin-icon {
+    margin: 0px 2px 0px 0px;
+    width: 35px;
+    height: 35px;
+}
+
+.play-friends-btn {
+    margin: 59px 0px 0px 0px;
+}
+
+.play-random-btn {
+    margin: 12px 0px 0px 0px;
+}
+
+.random-modal {
+    top: 34%;
+}

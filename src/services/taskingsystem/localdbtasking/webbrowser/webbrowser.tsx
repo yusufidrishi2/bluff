@@ -8,12 +8,12 @@ export class WebBrowser extends LocalDBTasking {
     }
 
     fetchDataFromLocalDB(): Promise<number|null> {
-        let localUserId: number = parseInt(window.localStorage.getItem('userdata')!);
+        let localUserId: number = parseInt(window.localStorage.getItem('userid')!);
         return Promise.resolve(localUserId);
     }
 
     saveUserDataToLocalDB(serialisedUserData: IUserData): Promise<any> {
-        window.localStorage.setItem('userdata', String(serialisedUserData.userId));
+        window.localStorage.setItem('userid', String(serialisedUserData.id));
         return Promise.resolve();
     }
 }

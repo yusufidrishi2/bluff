@@ -1,6 +1,8 @@
 import { IUserData, UserData } from "../model/userdata";
 import { LocalDBTasking } from "./localdbtasking/localdbtasking";
 import { WebBrowser } from "./localdbtasking/webbrowser/webbrowser";
+import { StandAloneTasking } from "./upstreamtasking/standalonetasking/standalonetasking";
+import { UpstreamTasking } from "./upstreamtasking/upstreamtasking";
 
 
 export class TaskingSystem {
@@ -9,45 +11,40 @@ export class TaskingSystem {
 
     private _localDBTasking: LocalDBTasking;
 
+    private _upstreanDBTasking: UpstreamTasking;
+
     constructor() {
         this._userData = new UserData();
         this._localDBTasking = null as any;
-        if ((window as any).__env.TASKING_SYSTEM === "WEB_BROWSER") {
+        this._upstreanDBTasking = null as any;
+        if ((window as any).__env.LOCAL_TASKING_SYSTEM === "WEB_BROWSER") {
             this._localDBTasking = new WebBrowser();
+        }
+        if ((window as any).__env.UPSTREAM_TASKING_SYSTEM === "STANDALONE") {
+            this._upstreanDBTasking = new StandAloneTasking();
         }
     }
 
-    isLogingNeeded(): Promise<boolean> {
+    isAlreadyLoggedIn(): Promise<UserData|null> {
         return this._localDBTasking.fetchDataFromLocalDB()
             .then(userId => {
-                this._userData.setUserId(userId);
-            }).then(() => {
-                if (this._userData.getUserId()) {
-                    return false;
+                if (userId) {
+                    this._userData.setId(userId);
+                    return this._userData;
                 } else {
-                    return true;
+                    return null;
                 }
             });
-    }
-
-    /**
-     * @function fetchUserData Fetch the user data from the server
-     * @returns Boolean value which tells whether the data is available or not
-     */
-    fetchUserDataFromUpstream(): Promise<UserData> {
-        return new Promise((resolve, reject) => {
-            
-        })
     }
 
     saveUserData(userData: UserData) {
         this._userData = userData;
         let serialisedUserData: IUserData = userData.getSerialisedData();
         this._localDBTasking.saveUserDataToLocalDB(serialisedUserData);
-        this.saveUserDataToUpstream(serialisedUserData);
+        this._upstreanDBTasking.saveUserDataToUpstream(serialisedUserData);
     }
 
-    private saveUserDataToUpstream(serialisedUserData: IUserData) {
-
+    getUpstreamInstance(): UpstreamTasking {
+        return this._upstreanDBTasking;
     }
 }

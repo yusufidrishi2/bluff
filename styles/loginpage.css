@@ -14,4 +14,26 @@
 
 #my-signin2 {
     top: 70%;
+    box-shadow: 2px 2px 4px white;
+}
+
+.footer {
+    bottom: 0px;
+    position: absolute;
+    color: #19c9d2;
+    right: 4px;
+    font-weight: bold;
+    text-shadow: 1px 2px 3px #3034a2;
+    font-size: 25px;
+    font-style: italic
+}
+
+.main-heading {
+    font-size: 435%;
+    text-shadow: 2px 2px 4px;
+    color: white;
+}
+
+.font-change {
+    font-family: Arial, Helvetica, sans-serif;
 }
