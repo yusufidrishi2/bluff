@@ -1,11 +1,12 @@
 /**
  * Necessary imports of the packages
  */
-import { UserLoginData } from '../../services/model/logindata';
-import { UserData } from '../../services/model/userdata';
+import { UserLoginData } from '../../services/model/taskdata';
+import { PlayerData } from '../../services/model/playerdata';
 import { TaskingSystem } from '../../services/taskingsystem/taskingsystem';
 import { MyOwnTSX } from '../../services/utils/myowntsx';
 import { SystemHandler } from '../systemhandler/systemhandler';
+import { ObjectId } from 'bson';
 
 export class LoginHandler {
 
@@ -18,10 +19,10 @@ export class LoginHandler {
         taskingSystem.isAlreadyLoggedIn().then(answer => {
             if (answer) {
                 taskingSystem.getUpstreamInstance()
-                    .fetchUserDataFromUpstream(answer.getId()!)
-                    .then(userData => {
+                    .fetchUserDataFromUpstream(String(answer.getId()))
+                    .then(playerData => {
                         document.getElementById(LOGIN_HANDLER.CONTENT_CHANGE_AREA)!.innerHTML = '';
-                        new SystemHandler(userData, LOGIN_HANDLER.CONTENT_CHANGE_AREA);
+                        new SystemHandler(playerData, LOGIN_HANDLER.CONTENT_CHANGE_AREA);
                     })
             } else {
                 document.getElementById(LOGIN_HANDLER.GOOGLE_SIGNIN)!.style.removeProperty('display');
@@ -59,17 +60,17 @@ export class LoginHandler {
         let rawLoginData = document.getElementById(LOGIN_HANDLER.LOGIN_DATA_CONTAINER)!.innerHTML;
         if (rawLoginData) {
             let loginData: UserLoginData = JSON.parse(rawLoginData);
-            let userData = new UserData(
+            let playerData = new PlayerData(
                 {
                     id: loginData.id,
-                    name: loginData.name, 
-                    points: 0,
+                    playerName: loginData.name, 
+                    points: '0',
                     dpUrl: new URL(loginData.dpImageUrl)
                 }
             );
-            taskingSystem.saveUserData(userData);
+            taskingSystem.saveUserData(playerData);
             document.getElementById(LOGIN_HANDLER.CONTENT_CHANGE_AREA)!.innerHTML = '';
-            new SystemHandler(userData, LOGIN_HANDLER.CONTENT_CHANGE_AREA);
+            new SystemHandler(playerData, LOGIN_HANDLER.CONTENT_CHANGE_AREA);
         }
     }
 }

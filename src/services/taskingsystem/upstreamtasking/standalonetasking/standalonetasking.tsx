@@ -1,4 +1,5 @@
-import { IUserData, UserData } from "../../../model/userdata";
+
+import { IPlayerData, PlayerData } from "../../../model/playerdata";
 import { UpstreamTasking } from "../upstreamtasking";
 
 export class StandAloneTasking extends UpstreamTasking {
@@ -7,12 +8,21 @@ export class StandAloneTasking extends UpstreamTasking {
         super();    
     }
 
-    saveUserDataToUpstream(serialisedUserData: IUserData) {
-        return true;
+    saveUserDataToUpstream(serialisedUserData: IPlayerData): Promise<PlayerData> {
+        return Promise.resolve(new PlayerData(serialisedUserData));
     }
 
-    fetchUserDataFromUpstream(userId: number): Promise<UserData> {
+    fetchUserDataFromUpstream(userId: string): Promise<PlayerData> {
         let exampleURL = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Small_Steering_wheel_icon.svg/1200px-Small_Steering_wheel_icon.svg.png';
-        return Promise.resolve(new UserData({id: userId, name: "MD. Yusuf Idrishi", dpUrl: new URL(exampleURL), points: 0}));
-    }
+        return Promise.resolve(
+            new PlayerData(
+                {
+                    id: userId, 
+                    playerName: 'MD. Yusuf Idrishi', 
+                    dpUrl: new URL(exampleURL), 
+                    points: '0'
+                }
+            )
+        );
+    }    
 }

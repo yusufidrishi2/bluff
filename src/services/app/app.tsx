@@ -32,7 +32,7 @@ export class App {
 /**
  * @enum Contains the html page elements used in starting of application
  */
-enum APP_ELEMENTS {
+export enum APP_ELEMENTS {
     MAIN_AREA = 'main-area'
 }
 

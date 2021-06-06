@@ -1,5 +1,7 @@
-import { IUserData, UserData } from "../../../model/userdata";
+
+import { IPlayerData } from "../../../model/playerdata";
 import { LocalDBTasking } from "../localdbtasking";
+import { Utils } from "../../../utils/utils";
 
 export class WebBrowser extends LocalDBTasking {
 
@@ -7,13 +9,15 @@ export class WebBrowser extends LocalDBTasking {
         super();
     }
 
-    fetchDataFromLocalDB(): Promise<number|null> {
-        let localUserId: number = parseInt(window.localStorage.getItem('userid')!);
-        return Promise.resolve(localUserId);
+    fetchDataFromLocalDB(): Promise<bigint|null> {
+        let encryptedData = window.localStorage.getItem('userid')!;
+        let decreptedData = encryptedData ? BigInt(Utils.decryptData(encryptedData)) : BigInt(0);
+        return Promise.resolve(decreptedData);
     }
 
-    saveUserDataToLocalDB(serialisedUserData: IUserData): Promise<any> {
-        window.localStorage.setItem('userid', String(serialisedUserData.id));
+    saveUserDataToLocalDB(serialisedUserData: IPlayerData): Promise<any> {
+        let encryptedPlayerId = Utils.encryptData(String(serialisedUserData.id));
+        window.localStorage.setItem('userid', encryptedPlayerId);
         return Promise.resolve();
     }
 }

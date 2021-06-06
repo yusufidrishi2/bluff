@@ -1,15 +1,16 @@
-import { IUserData } from "../../model/userdata";
+
+import { IPlayerData } from "../../model/playerdata";
 
 export class LocalDBTasking {
 
     constructor() {
     }
 
-    fetchDataFromLocalDB(): Promise<number|null> {
+    fetchDataFromLocalDB(): Promise<bigint|null> {
         throw Error("Subclass of LocalDBTasking class must implement fetchDataFromLocalDB function");
     }
 
-    saveUserDataToLocalDB(serialisedUserData: IUserData): Promise<any> {
+    saveUserDataToLocalDB(serialisedUserData: IPlayerData): Promise<any> {
         throw Error("Subclass of LocalDBTasking class must implement saveUserDataToLocalDB function");
     }
 }

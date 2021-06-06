@@ -7,6 +7,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = env => {
 	return {
+		devServer: {
+		    headers: {
+				"Access-Control-Allow-Origin": "*",
+				"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+				"Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+			}
+		},
 		optimization: {
 			splitChunks: {
 				cacheGroups: {
@@ -23,7 +30,6 @@ module.exports = env => {
 			app :[ './src/services/app/app.tsx']
 		},
 		mode: 'none',
-		target: 'node',
 		devtool: 'inline-source-map',
 		output: {
 			path : path.resolve(__dirname, 'dist'),
