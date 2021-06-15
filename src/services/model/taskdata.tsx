@@ -15,3 +15,30 @@ export enum GAME_TYPES {
     GAME_WITH_RANDOM,
     JOIN_EXISTING_GAME
 }
+
+export interface IFriendlyPlayerProfile {
+    playersAllowed: number;
+    joiningCode: string;
+    id: string,
+    points: string,
+    playerName: string,
+    dpUrl: URL;
+}
+
+export interface IJoiningFriendlyPlayerProfile {
+    joiningCode: string;
+    id: string,
+    points: string,
+    playerName: string,
+    dpUrl: URL;
+}
+
+export enum NotificationType {
+    FAILURE,
+    SUCCESS
+}
+
+export interface ServerNotification {
+    notificationType: NotificationType,
+    message: string
+}

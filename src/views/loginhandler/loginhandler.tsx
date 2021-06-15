@@ -6,7 +6,6 @@ import { PlayerData } from '../../services/model/playerdata';
 import { TaskingSystem } from '../../services/taskingsystem/taskingsystem';
 import { MyOwnTSX } from '../../services/utils/myowntsx';
 import { SystemHandler } from '../systemhandler/systemhandler';
-import { ObjectId } from 'bson';
 
 export class LoginHandler {
 
@@ -19,7 +18,7 @@ export class LoginHandler {
         taskingSystem.isAlreadyLoggedIn().then(answer => {
             if (answer) {
                 taskingSystem.getUpstreamInstance()
-                    .fetchUserDataFromUpstream(String(answer.getId()))
+                    .fetchPlayerDataFromUpstream(String(answer.getId()))
                     .then(playerData => {
                         document.getElementById(LOGIN_HANDLER.CONTENT_CHANGE_AREA)!.innerHTML = '';
                         new SystemHandler(playerData, LOGIN_HANDLER.CONTENT_CHANGE_AREA);
@@ -68,7 +67,7 @@ export class LoginHandler {
                     dpUrl: new URL(loginData.dpImageUrl)
                 }
             );
-            taskingSystem.saveUserData(playerData);
+            taskingSystem.savePlayerData(playerData);
             document.getElementById(LOGIN_HANDLER.CONTENT_CHANGE_AREA)!.innerHTML = '';
             new SystemHandler(playerData, LOGIN_HANDLER.CONTENT_CHANGE_AREA);
         }

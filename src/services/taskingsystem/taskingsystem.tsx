@@ -1,8 +1,8 @@
-import { ObjectId } from "bson";
 import { IPlayerData, PlayerData } from "../model/playerdata";
+import { IFriendlyPlayerProfile, IJoiningFriendlyPlayerProfile } from "../model/taskdata";
 import { LocalDBTasking } from "./localdbtasking/localdbtasking";
 import { WebBrowser } from "./localdbtasking/webbrowser/webbrowser";
-import { MongoDBTasking } from "./upstreamtasking/mongodbtasking/mongodbtasking";
+import { SpringServer } from "./upstreamtasking/springserver/springserver";
 import { StandAloneTasking } from "./upstreamtasking/standalonetasking/standalonetasking";
 import { UpstreamTasking } from "./upstreamtasking/upstreamtasking";
 
@@ -24,8 +24,8 @@ export class TaskingSystem {
         }
         if ((window as any).__env.UPSTREAM_TASKING_SYSTEM === "STANDALONE") {
             this._upstreanDBTasking = new StandAloneTasking();
-        } else if ((window as any).__env.UPSTREAM_TASKING_SYSTEM === "MONGO_DB") {
-            this._upstreanDBTasking = new MongoDBTasking();
+        } else if ((window as any).__env.UPSTREAM_TASKING_SYSTEM === "SPRING_SERVER") {
+            this._upstreanDBTasking = new SpringServer();
         }
     }
 
@@ -41,14 +41,22 @@ export class TaskingSystem {
             });
     }
 
-    saveUserData(playerData: PlayerData) {
+    savePlayerData(playerData: PlayerData) {
         this._playerData = playerData;
-        let serialisedUserData: IPlayerData = playerData.getSerialisedData();
-        this._localDBTasking.saveUserDataToLocalDB(serialisedUserData);
-        this._upstreanDBTasking.saveUserDataToUpstream(serialisedUserData);
+        let serialisedPlayerData: IPlayerData = playerData.getSerialisedData();
+        this._localDBTasking.savePlayerDataToLocalDB(serialisedPlayerData);
+        this._upstreanDBTasking.savePlayerDataToUpstream(serialisedPlayerData);
     }
 
     getUpstreamInstance(): UpstreamTasking {
         return this._upstreanDBTasking;
+    }
+
+    createFriendlyPlatform(friendlyPlayer: IFriendlyPlayerProfile) {
+        return this._upstreanDBTasking.createFriendlyPlatform(friendlyPlayer);
+    }
+
+    joinFriendlyPlatform(joiningFriendlyPlayer: IJoiningFriendlyPlayerProfile) {
+        return this._upstreanDBTasking.joinFriendlyPlatform(joiningFriendlyPlayer);
     }
 }

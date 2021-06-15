@@ -12,11 +12,9 @@
   "author": "yusuf",
   "license": "ISC",
   "devDependencies": {
-    "@types/bson": "^4.0.3",
     "@types/crypto-js": "^4.0.1",
     "@types/jquery": "^3.3.33",
     "bootstrap": "^4.4.1",
-    "bson": "^4.4.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "crypto-js": "^4.0.0",
@@ -25,6 +23,7 @@
     "html-webpack-plugin": "^3.2.0",
     "jquery": "^3.4.1",
     "mini-css-extract-plugin": "^1.6.0",
+    "net": "^1.0.2",
     "require": "^2.4.20",
     "ts-loader": "^6.2.1",
     "typescript": "^3.8.3",
@@ -35,6 +34,10 @@
   },
   "dependencies": {
     "@types/request": "^2.48.5",
-    "request": "^2.88.2"
+    "@types/sockjs-client": "^1.5.0",
+    "@types/stompjs": "^2.3.4",
+    "request": "^2.88.2",
+    "sockjs-client": "^1.5.1",
+    "stompjs": "^2.3.3"
   }
 }

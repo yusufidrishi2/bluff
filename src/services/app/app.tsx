@@ -12,20 +12,26 @@ import { TaskingSystem } from '../taskingsystem/taskingsystem';
  * @class Executes at the begining of the app  
  */
 export class App {
+
+    private static taskingSystem: TaskingSystem = null as any;
+
     /**
      * @constructor Initiate the application to start
      */
-    constructor () {
-        this.start();
+    private constructor () {
     }
 
     /**
      * @private 
      * @function start Start the activity
      */
-    private start() {
-        let taskingSystem = new TaskingSystem();
-        new LoginHandler(taskingSystem, APP_ELEMENTS.MAIN_AREA);
+    static start() {
+        this.taskingSystem = new TaskingSystem();
+        new LoginHandler(this.taskingSystem, APP_ELEMENTS.MAIN_AREA);
+    }
+
+    static getTaskingSystem() {
+        return this.taskingSystem;
     }
 }
 
@@ -39,4 +45,4 @@ export enum APP_ELEMENTS {
 /**
  * Initialization of the class App and starting the application
  */
-new App();
+App.start();

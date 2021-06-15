@@ -1,5 +1,6 @@
 
 import { IPlayerData, PlayerData } from "../../../model/playerdata";
+import { IFriendlyPlayerProfile } from "../../../model/taskdata";
 import { UpstreamTasking } from "../upstreamtasking";
 
 export class StandAloneTasking extends UpstreamTasking {
@@ -8,11 +9,11 @@ export class StandAloneTasking extends UpstreamTasking {
         super();    
     }
 
-    saveUserDataToUpstream(serialisedUserData: IPlayerData): Promise<PlayerData> {
-        return Promise.resolve(new PlayerData(serialisedUserData));
+    savePlayerDataToUpstream(serialisedPlayerData: IPlayerData): Promise<PlayerData> {
+        return Promise.resolve(new PlayerData(serialisedPlayerData));
     }
 
-    fetchUserDataFromUpstream(userId: string): Promise<PlayerData> {
+    fetchPlayerDataFromUpstream(userId: string): Promise<PlayerData> {
         let exampleURL = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Small_Steering_wheel_icon.svg/1200px-Small_Steering_wheel_icon.svg.png';
         return Promise.resolve(
             new PlayerData(
@@ -24,5 +25,13 @@ export class StandAloneTasking extends UpstreamTasking {
                 }
             )
         );
-    }    
+    }
+    
+    createFriendlyPlatform(friendlyPlayer: IFriendlyPlayerProfile) {
+        return Promise.resolve() as any;
+    }
+
+    joinFriendlyPlatform(friendlyPlayer: IFriendlyPlayerProfile) {
+        return Promise.resolve() as any;
+    }
 }

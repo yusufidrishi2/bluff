@@ -45,7 +45,7 @@ export class SystemHandler {
             new GameController(playerData, {mode: GAME_TYPES.NEW_GAME_WITH_FRIENDS, data: selectedValue});
         });
 
-        document.getElementById(SYSTEM_ELEMENTS.JOIN_EXISTING_GAME)!.addEventListener('click', e => {
+        document.getElementById(SYSTEM_ELEMENTS.JOIN_EXISTING_GAME_MODAL)!.addEventListener('click', e => {
             (document.getElementsByClassName('bg-design')[0]! as HTMLElement).style.setProperty("display", "none");
             let joinCode = (document.getElementById(SYSTEM_ELEMENTS.JOINING_CODE)! as HTMLTextAreaElement).value;
             new GameController(playerData, {mode: GAME_TYPES.JOIN_EXISTING_GAME, data: joinCode});
@@ -92,7 +92,7 @@ export class SystemHandler {
                         <span class="code-label float-left">ENTER CODE: </span>
                         <textarea id={SYSTEM_ELEMENTS.JOINING_CODE} class="code-input float-left"></textarea>
                     </div>
-                    <button id={SYSTEM_ELEMENTS.JOIN_EXISTING_GAME} class="btn existing-game-btn">JOIN EXISTING GAME</button>
+                    <button id={SYSTEM_ELEMENTS.JOIN_EXISTING_GAME_MODAL} class="btn existing-game-btn">JOIN EXISTING GAME</button>
                 </div>
             </div> 
         );
@@ -164,7 +164,7 @@ enum SYSTEM_ELEMENTS {
     POPUP_CONTENT = 'popup-content',
     SYSTEM_CONTENT = 'login-page-content',
     START_NEW_GAME = 'start-game',
-    JOIN_EXISTING_GAME = 'join-existing-game',
+    JOIN_EXISTING_GAME_MODAL = 'join-existing-game-modal',
     JOINING_CODE = 'joining-code',
     START_RANDOM_GAME = 'start-random-game',
     NO_OF_PLAYERS_RANDOM = 'no-of-players-random',

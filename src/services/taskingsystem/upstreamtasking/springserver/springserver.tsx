@@ -2,25 +2,40 @@
 import { IPlayerData, PlayerData } from "../../../model/playerdata";
 import { UpstreamTasking } from "../upstreamtasking";
 import { Utils } from "../../../utils/utils";
+import { IFriendlyPlayerProfile, IJoiningFriendlyPlayerProfile, ServerNotification } from "../../../model/taskdata";
 
-export class MongoDBTasking extends UpstreamTasking {
+export class SpringServer extends UpstreamTasking {
 
     constructor() {
         super();    
     }
 
-    saveUserDataToUpstream(serialisedUserData: IPlayerData): Promise<PlayerData> {
-        return this.getJSONxhr((window as any).__env.BASE_URL, 'POST', JSON.stringify(serialisedUserData))
+    savePlayerDataToUpstream(serialisedPlayerData: IPlayerData): Promise<PlayerData> {
+        return this.getJSONxhr((window as any).__env.BASE_URL + '/login', 'POST', JSON.stringify(serialisedPlayerData))
             .then((data: any) => {
                 return new PlayerData(data);
             });
     }
 
-    fetchUserDataFromUpstream(userId: string): Promise<PlayerData> {
+    fetchPlayerDataFromUpstream(userId: string): Promise<PlayerData> {
         let encryptedUserId = Utils.encryptData(userId);
         return this.getJSONxhr((window as any).__env.BASE_URL + '/' + encryptedUserId, 'GET')
             .then((data: any) => {
                 return new PlayerData(data);
+            });
+    }
+
+    createFriendlyPlatform(friendlyPlayer: IFriendlyPlayerProfile) {
+        return this.getJSONxhr((window as any).__env.BASE_URL + '/create-friendly-game', 'POST', JSON.stringify(friendlyPlayer))
+            .then((data: any) => {
+                return new PlayerData(data);
+            });
+    }
+
+    joinFriendlyPlatform(friendlyPlayer: IJoiningFriendlyPlayerProfile) {
+        return this.getJSONxhr((window as any).__env.BASE_URL + '/request-friendly-game', 'POST', JSON.stringify(friendlyPlayer))
+            .then((data: ServerNotification) => {
+                return data; 
             });
     }
 
@@ -31,7 +46,7 @@ export class MongoDBTasking extends UpstreamTasking {
      * @param parameters Parameters for the call
      * @param method Method of the API call
      */
-     private getJSONxhr(url: string, method: string, parameters: string = "", authtoken: string = "") {
+     private getJSONxhr(url: string, method: string, parameters: string = "", authtoken: string = ""): Promise<any> {
         return new Promise(function (resolve, reject) {
             var request = new XMLHttpRequest();
             request.open(method, url, true);
@@ -40,7 +55,7 @@ export class MongoDBTasking extends UpstreamTasking {
                 if (request.readyState == 4) {
                     let status = request.status;
                     if (status == 200) {
-                        let data = JSON.parse(request.responseText);
+                        let data = request.responseText ? JSON.parse(request.responseText) : "";
                         resolve(data);
                     } else {
                         reject(status);

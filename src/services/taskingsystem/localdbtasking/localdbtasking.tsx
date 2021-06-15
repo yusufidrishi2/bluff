@@ -10,7 +10,7 @@ export class LocalDBTasking {
         throw Error("Subclass of LocalDBTasking class must implement fetchDataFromLocalDB function");
     }
 
-    saveUserDataToLocalDB(serialisedUserData: IPlayerData): Promise<any> {
-        throw Error("Subclass of LocalDBTasking class must implement saveUserDataToLocalDB function");
+    savePlayerDataToLocalDB(serialisedPlayerData: IPlayerData): Promise<any> {
+        throw Error("Subclass of LocalDBTasking class must implement savePlayerDataToLocalDB function");
     }
 }

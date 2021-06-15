@@ -15,8 +15,8 @@ export class WebBrowser extends LocalDBTasking {
         return Promise.resolve(decreptedData);
     }
 
-    saveUserDataToLocalDB(serialisedUserData: IPlayerData): Promise<any> {
-        let encryptedPlayerId = Utils.encryptData(String(serialisedUserData.id));
+    savePlayerDataToLocalDB(serialisedPlayerData: IPlayerData): Promise<any> {
+        let encryptedPlayerId = Utils.encryptData(String(serialisedPlayerData.id));
         window.localStorage.setItem('userid', encryptedPlayerId);
         return Promise.resolve();
     }
