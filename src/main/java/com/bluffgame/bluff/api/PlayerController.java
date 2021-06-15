@@ -1,5 +1,8 @@
 package com.bluffgame.bluff.api;
 
+import com.bluffgame.bluff.model.FriendlyPlayerProfile;
+import com.bluffgame.bluff.model.JoiningFriendlyPlayerProfile;
+import com.bluffgame.bluff.model.Notification;
 import com.bluffgame.bluff.model.PlayerProfile;
 import com.bluffgame.bluff.service.PlayerService;
 
@@ -31,7 +34,7 @@ public class PlayerController {
         this.playerService = playerService;
     }
     
-    @PostMapping
+    @PostMapping("/login")
     @ResponseBody
     public PlayerProfile addPlayer(@RequestBody PlayerProfile person) {
         return this.playerService.addPlayer(person);
@@ -41,5 +44,17 @@ public class PlayerController {
     @ResponseBody
     public PlayerProfile getPlayer(@PathVariable("id") String id) {
         return this.playerService.getPlayer(id);
+    }
+
+    @PostMapping("/create-friendly-game")
+    @ResponseBody
+    public void createFriendlyPlatform(@RequestBody FriendlyPlayerProfile friendlyPlayerProfile) {
+        this.playerService.createFriendlyPlatform(friendlyPlayerProfile);
+    }
+
+    @PostMapping("/request-friendly-game")
+    @ResponseBody
+    public Notification addPlayerInFriendlyGame(@RequestBody JoiningFriendlyPlayerProfile friendlyPlayerProfile) {
+        return this.playerService.addPlayerInFriendlyGame(friendlyPlayerProfile);
     }
 }
