@@ -4,6 +4,7 @@ import com.bluffgame.bluff.model.FriendlyPlayerProfile;
 import com.bluffgame.bluff.model.JoiningFriendlyPlayerProfile;
 import com.bluffgame.bluff.model.Notification;
 import com.bluffgame.bluff.model.PlayerProfile;
+import com.bluffgame.bluff.model.PlayerResponse;
 import com.bluffgame.bluff.service.PlayerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,11 @@ public class PlayerController {
     @ResponseBody
     public Notification addPlayerInFriendlyGame(@RequestBody JoiningFriendlyPlayerProfile friendlyPlayerProfile) {
         return this.playerService.addPlayerInFriendlyGame(friendlyPlayerProfile);
+    }
+
+    @PostMapping("/player-game-response")
+    @ResponseBody
+    public void handlePlayerGameResponse(@RequestBody PlayerResponse playerResponse) {
+        this.playerService.handlePlayerGameResponse(playerResponse);
     }
 }

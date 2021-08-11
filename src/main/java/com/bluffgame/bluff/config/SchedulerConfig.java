@@ -2,7 +2,10 @@ package com.bluffgame.bluff.config;
 
 import java.util.List;
 
+import com.bluffgame.bluff.model.GameInititals;
 import com.bluffgame.bluff.model.Notification;
+import com.bluffgame.bluff.model.NotificationType;
+import com.bluffgame.bluff.model.PlayerChance;
 import com.bluffgame.bluff.model.PlayerProfile;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,18 +35,33 @@ public class SchedulerConfig {
     }
 
     
-    public static void sendResponseForJoiningFriendlyGame(List<PlayerProfile> playerProfiles, long joiningCode) {
+    public static void sendResponseForJoiningGame(List<PlayerProfile> playerProfiles, long joiningCode) {
+        System.out.println("\nCheck = "+playerProfiles);
+        
         SchedulerConfig.globalTemplate.convertAndSend(
-            "/topic/join-friendly-game/"+joiningCode, 
+            "/topic/join-game/"+joiningCode, 
             playerProfiles
         );
     }
 
-    public static void joinRandomGame(PlayerProfile playerProfile) {
-        SchedulerConfig.globalTemplate.convertAndSend("/topic/join-random-game/"+playerProfile.getId(), playerProfile);
+    public static void startTheGame(long joiningCode, GameInititals gameInititals) {
+        SchedulerConfig.globalTemplate.convertAndSend(
+            "/topic/start-game/"+joiningCode,
+            gameInititals
+        );
+    }
+
+    public static void sendNextChance(long joiningCode, PlayerChance playerChance) {
+        SchedulerConfig.globalTemplate.convertAndSend(
+            "/topic/player-chances/"+joiningCode,
+            playerChance 
+        );
     }
 
     public static void sendNotification(PlayerProfile playerProfile, Notification notification) {
-        SchedulerConfig.globalTemplate.convertAndSend("/topic/notification/"+playerProfile.getId(), playerProfile);
+        SchedulerConfig.globalTemplate.convertAndSend(
+            "/topic/notification/"+playerProfile.getId(), 
+            playerProfile
+        );
     }
 }

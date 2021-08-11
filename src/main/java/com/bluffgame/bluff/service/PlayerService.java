@@ -10,6 +10,7 @@ import com.bluffgame.bluff.model.JoiningFriendlyPlayerProfile;
 import com.bluffgame.bluff.model.Notification;
 import com.bluffgame.bluff.model.NotificationType;
 import com.bluffgame.bluff.model.PlayerProfile;
+import com.bluffgame.bluff.model.PlayerResponse;
 import com.bluffgame.bluff.security.AES;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,16 +43,18 @@ public class PlayerService {
         this.activeFriendlyGames.put(friendlyPlayerProfile.getJoiningCode(), friendlyPlayerProfile);
     }
 
-    public synchronized Notification addPlayerInFriendlyGame(JoiningFriendlyPlayerProfile joiningFriendlyPlayerProfile) {
+    public Notification addPlayerInFriendlyGame(JoiningFriendlyPlayerProfile joiningFriendlyPlayerProfile) {
         FriendlyPlayerProfile friendlyPlayPlatform = this.activeFriendlyGames.get(joiningFriendlyPlayerProfile.getJoiningCode());
-        
         if (friendlyPlayPlatform != null) {
             if (friendlyPlayPlatform.getTotalPlayers() < friendlyPlayPlatform.getPlayersAllowed()) {
-                friendlyPlayPlatform.addPlayer(joiningFriendlyPlayerProfile.getPlayerProfile());
-                return new Notification(NotificationType.SUCCESS, "Seccessfully added in the game");
+                return friendlyPlayPlatform.addPlayer(joiningFriendlyPlayerProfile.getPlayerProfile());
             }
             return new Notification(NotificationType.FAILURE, "Game has already been started");
         }
         return new Notification(NotificationType.FAILURE, "There is no game available with code: "+joiningFriendlyPlayerProfile.getJoiningCode());
+    }
+
+    public void handlePlayerGameResponse(PlayerResponse playerResponse) {
+        
     }
 }

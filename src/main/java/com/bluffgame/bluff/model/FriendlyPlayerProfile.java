@@ -45,7 +45,7 @@ public class FriendlyPlayerProfile {
         this.joiningCode = joiningCode;
     }
 
-    public synchronized int getTotalPlayers() {
+    public int getTotalPlayers() {
         return this.playerProfiles.size();
     }
 
@@ -53,8 +53,12 @@ public class FriendlyPlayerProfile {
         return playerProfiles.get(0);
     }
 
-    public synchronized void addPlayer(PlayerProfile playerProfile) {
+    public Notification addPlayer(PlayerProfile playerProfile) {
         this.playerProfiles.add(playerProfile);
-        SchedulerConfig.sendResponseForJoiningFriendlyGame(playerProfiles, this.joiningCode);
+        SchedulerConfig.sendResponseForJoiningGame(playerProfiles, this.joiningCode);
+        if (this.playerProfiles.size() == this.playersAllowed) {
+            SchedulerConfig.startTheGame(this.joiningCode, new GameInititals(this.playerProfiles));
+        }
+        return new Notification(NotificationType.SUCCESS, "Seccessfully added in the game");
     }
 }
