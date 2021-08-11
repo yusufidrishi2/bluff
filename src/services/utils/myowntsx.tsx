@@ -79,7 +79,11 @@ declare global {
             small: any,
             h6: any,
             textarea: any,
-            b: any
+            b: any,
+            canvas: any,
+            svg: any,
+            image: any
+            th: any
         }
     }
 }

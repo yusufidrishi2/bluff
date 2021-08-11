@@ -2,7 +2,7 @@
 import { IPlayerData, PlayerData } from "../../../model/playerdata";
 import { UpstreamTasking } from "../upstreamtasking";
 import { Utils } from "../../../utils/utils";
-import { IFriendlyPlayerProfile, IJoiningFriendlyPlayerProfile, ServerNotification } from "../../../model/taskdata";
+import { IFriendlyPlayerProfile, IJoiningFriendlyPlayerProfile, IPlayerGameResponse, ServerNotification } from "../../../model/taskdata";
 
 export class SpringServer extends UpstreamTasking {
 
@@ -39,6 +39,13 @@ export class SpringServer extends UpstreamTasking {
             });
     }
 
+    sendPlayerGameResponse(playerGameResponse: IPlayerGameResponse) {
+        return this.getJSONxhr((window as any).__env.BASE_URL + '/player-game-response', 'POST', JSON.stringify(playerGameResponse))
+            .then((data: ServerNotification) => {
+                return data; 
+            });
+    }
+
     /**
      * Function to make the API call to get the signed image url
      * @param url Endpoint of the API
@@ -55,7 +62,7 @@ export class SpringServer extends UpstreamTasking {
                 if (request.readyState == 4) {
                     let status = request.status;
                     if (status == 200) {
-                        let data = request.responseText ? JSON.parse(request.responseText) : "";
+                        let data = request.responseText.trim() ? JSON.parse(request.responseText.trim()) : "";
                         resolve(data);
                     } else {
                         reject(status);

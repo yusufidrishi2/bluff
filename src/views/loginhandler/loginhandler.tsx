@@ -76,7 +76,7 @@ export class LoginHandler {
 
 
 
-enum LOGIN_HANDLER {
+export enum LOGIN_HANDLER {
     LOGIN_DATA_CONTAINER = 'login-data-container',
     GOOGLE_SIGNIN = 'my-signin2',
     CONTENT_CHANGE_AREA = 'content-change-area'

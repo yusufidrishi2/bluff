@@ -1,5 +1,5 @@
 import { IPlayerData, PlayerData } from "../model/playerdata";
-import { IFriendlyPlayerProfile, IJoiningFriendlyPlayerProfile } from "../model/taskdata";
+import { IFriendlyPlayerProfile, IJoiningFriendlyPlayerProfile, IPlayerGameResponse } from "../model/taskdata";
 import { LocalDBTasking } from "./localdbtasking/localdbtasking";
 import { WebBrowser } from "./localdbtasking/webbrowser/webbrowser";
 import { SpringServer } from "./upstreamtasking/springserver/springserver";
@@ -58,5 +58,9 @@ export class TaskingSystem {
 
     joinFriendlyPlatform(joiningFriendlyPlayer: IJoiningFriendlyPlayerProfile) {
         return this._upstreanDBTasking.joinFriendlyPlatform(joiningFriendlyPlayer);
+    }
+
+    sendPlayerGameResponse(playerGameResponse: IPlayerGameResponse) {
+        return this._upstreanDBTasking.sendPlayerGameResponse(playerGameResponse);
     }
 }

@@ -85,7 +85,7 @@ export class SystemHandler {
                             {players.map(element => element)}
                         </select>
                     </div>
-                    <button id={SYSTEM_ELEMENTS.START_NEW_GAME} class="btn existing-game-btn">START NEW GAME</button>
+                    <button id={SYSTEM_ELEMENTS.START_NEW_GAME} class="btn existing-game-btn" style="margin: 2px;">START NEW GAME</button>
                 </div>
                 <div class="model-area-second">
                     <div class="code-area">

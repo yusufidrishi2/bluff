@@ -1,6 +1,6 @@
 
 import { IPlayerData, PlayerData } from "../../model/playerdata";
-import { IFriendlyPlayerProfile, IJoiningFriendlyPlayerProfile, ServerNotification } from "../../model/taskdata";
+import { IFriendlyPlayerProfile, IJoiningFriendlyPlayerProfile, IPlayerGameResponse, ServerNotification } from "../../model/taskdata";
 
 export class UpstreamTasking {
 
@@ -21,5 +21,9 @@ export class UpstreamTasking {
 
     joinFriendlyPlatform(joiningFriendlyPlayer: IJoiningFriendlyPlayerProfile): Promise<ServerNotification> {
         throw Error("Subclass of UpstreamTasking class must implement joinFriendlyPlatform function");
+    }
+
+    sendPlayerGameResponse(playerGameResponse: IPlayerGameResponse) {
+        throw Error("Subclass of UpstreamTasking class must implement sendPlayerGameResponse function");
     }
 }
